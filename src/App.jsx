@@ -1,19 +1,8 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./Pages/Login";
-import Home from "./Pages/Home";
-import Question from "./Pages/Question";
-import Ranked from "./Pages/Ranked";
+import RootRouting from "./route/route";
 const App = () => {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/home/:id" element={<Home />} />
-          <Route path="/home/:id/rank" element={<Ranked />} />
-          <Route path="/quest/:id/:questid" element={<Question />} />
-        </Routes>
-      </BrowserRouter>
+      <RootRouting />
     </>
   );
 };

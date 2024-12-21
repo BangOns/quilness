@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Check_User from "../../Utils/Check_User";
 import { useNavigate } from "react-router-dom";
 import { ThisQuestions } from "../../../Quest";
@@ -9,26 +9,42 @@ export default function FormLogin() {
   const [loadData, loadDataSet] = useState(false);
   const [userData, userDataSet] = useState({
     name: "",
-    code: "",
   });
   function handelChange(e) {
     const { name, value } = e.target;
     userDataSet({ ...userData, [name]: value });
     errorValidateSet(false);
   }
+  function HandleLocalStorage() {
+    const data = localStorage.getItem("user");
+    if (data) {
+      navigate(`/home/${data}`);
+    }
+  }
   async function handleSubmit(e) {
     e.preventDefault();
-    const { name, code } = userData;
+    const { name } = userData;
     loadDataSet(true);
+    const validate = await Check_User({ name });
     try {
-      const validate = await Check_User({ name, code });
       if (validate.success) {
-        if (validate.data.points > 0) {
-          for (let i in ThisQuestions) {
+        if (validate.data.Level.length !== 0) {
+          const Level = validate.data.Level.filter(
+            (item) => item.success === true
+          );
+          for (let i in Level) {
             ThisQuestions[i].open = true;
             ThisQuestions[i].success = true;
           }
         } else {
+          const Level1 = {
+            level: 1,
+            open: true,
+            success: false,
+            jawabanUser: [],
+          };
+          validate.data.Level = [Level1];
+          localStorage.setItem("user", JSON.stringify(validate.data));
           for (let i in ThisQuestions) {
             if (i > 0) {
               ThisQuestions[i].open = false;
@@ -39,7 +55,7 @@ export default function FormLogin() {
             }
           }
         }
-        navigate(`/home/${validate.data.code}`);
+        navigate(`/home/${validate.data.name}`);
         errorValidateSet(false);
       }
     } catch (error) {
@@ -48,6 +64,13 @@ export default function FormLogin() {
       loadDataSet(false);
     }
   }
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("user"));
+    if (data) {
+      navigate(`/home/${data.name}`);
+    }
+  }, []);
+
   return (
     <form
       onSubmit={handleSubmit}

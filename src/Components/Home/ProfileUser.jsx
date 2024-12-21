@@ -10,11 +10,7 @@ export default function ProfileUser({ users }) {
         }`}
       >
         <img
-          src={
-            users.gender === "Men"
-              ? IconsImport.IconsMen
-              : IconsImport.IconsWomen
-          }
+          src={IconsImport.IconsMen}
           alt="profile"
           className="w-24 h-24 -mb-2"
         />
@@ -22,9 +18,6 @@ export default function ProfileUser({ users }) {
       <div className="mt-5">
         <h1 className="text-xl sm:text-3xl font-inter font-bold">
           {users.name}{" "}
-          <span className="font-inter font-bold text-purple-400">
-            ({users.points} Poin)
-          </span>
         </h1>
       </div>
     </header>

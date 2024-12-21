@@ -8,9 +8,9 @@ import Modals_Alert from "./Modals/Modals_Alert";
 export default function Navbar() {
   const { id } = useParams();
   const [modalsSignOut, modalsSignOutSet] = useState(false);
-  const GetUserById = UserCandidate.find(
-    (user) => user.code.toUpperCase() === id.toUpperCase()
-  );
+  const GetUserById = JSON.parse(localStorage.getItem("user"));
+  console.log(GetUserById);
+
   const locationIndex = useLocation().pathname.split("/");
   const activeLocation =
     useLocation().pathname.split("/")[locationIndex.length - 1];
