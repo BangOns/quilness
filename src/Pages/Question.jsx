@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import List_Question from "../Components/Quest/List_Question";
 import { useNavigate, useParams } from "react-router-dom";
 import { ThisQuestions } from "../../Quest";
-import { IconsImport } from "../Utils/IconsImport";
 import cekJawabanDanHitungSkor from "../Utils/Sum_Point";
 import PostPoint_User from "../Utils/PostPoint_User";
 import Modals_Alert from "../Components/Modals/Modals_Alert";
+import { localStorageSetUser } from "../Utils/LocalStorage";
 
 export default function Question() {
   const [step, stepSet] = useState(0);
@@ -18,7 +18,6 @@ export default function Question() {
   const QuestionLevel = ThisQuestions.find(
     (items) => items.level === parseInt(questid)
   );
-
   function handleNextStep(e) {
     e.preventDefault();
     if (step < QuestionLevel.dataPertanyaan.length - 1) {
@@ -69,12 +68,19 @@ export default function Question() {
       allAnswer,
       QuestionLevel.dataPertanyaan
     );
-    if (TotalSkor) PostPoint_User({ TotalSkor, id });
+    const UserData = PostPoint_User({ TotalSkor, questid });
     if (GetIndexQuestion !== -1) {
-      ThisQuestions[GetIndexQuestion].success = true;
+      UserData.Level[GetIndexQuestion].success = true;
       if (GetIndexQuestion < ThisQuestions.length - 1) {
-        ThisQuestions[GetIndexQuestion + 1].open = true;
+        const nextLevel = {
+          tingkat: ThisQuestions[GetIndexQuestion + 1].level,
+          open: true,
+          success: false,
+          jawabanUser: [],
+        };
+        UserData.Level = [...UserData.Level, nextLevel];
       }
+      localStorageSetUser(UserData);
       if (GetIndexQuestion < ThisQuestions.length - 1) {
         navigate(`/home/${id}`);
       } else if (GetIndexQuestion >= ThisQuestions.length - 1) {

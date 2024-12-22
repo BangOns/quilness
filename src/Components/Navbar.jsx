@@ -2,28 +2,23 @@ import React, { useState } from "react";
 import Logo from "./Logo";
 import { IconsImport } from "../Utils/IconsImport";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { UserCandidate } from "../../User";
 import Modals_Alert from "./Modals/Modals_Alert";
+import { localStorageRemoveUser } from "../Utils/LocalStorage";
 
 export default function Navbar() {
   const { id } = useParams();
   const [modalsSignOut, modalsSignOutSet] = useState(false);
-  const GetUserById = JSON.parse(localStorage.getItem("user"));
-  console.log(GetUserById);
 
   const locationIndex = useLocation().pathname.split("/");
   const activeLocation =
     useLocation().pathname.split("/")[locationIndex.length - 1];
   const navigate = useNavigate();
   function handleModals() {
-    if (GetUserById.points > 0) {
-      modalsSignOutSet(true);
-    } else {
-      navigate(`/`);
-    }
+    modalsSignOutSet(true);
   }
   function handleSignOutWithModals() {
     modalsSignOutSet(false);
+    localStorageRemoveUser();
     navigate(`/`);
   }
   return (
@@ -31,26 +26,15 @@ export default function Navbar() {
       <nav className="w-full font-alametric flex justify-between items-center px-4 ">
         <Logo />
         <div className="flex gap-5 items-center  z-30 sm:items-end">
-          {GetUserById.points > 0 && (
-            <>
-              <Link
-                to={`/home/${id}`}
-                className={`text-lg font-poppins  ${
-                  activeLocation === id ? "text-cyan-500" : "text-white"
-                } hover:text-cyan-500 max-sm:text-sm cursor-pointer`}
-              >
-                Home
-              </Link>
-              <Link
-                to={`/home/${id}/rank`}
-                className={`text-lg font-poppins  ${
-                  activeLocation === "rank" ? "text-cyan-500" : "text-white"
-                } hover:text-cyan-500 cursor-pointer  max-sm:text-sm `}
-              >
-                Rank
-              </Link>
-            </>
-          )}
+          <Link
+            to={`/home/${id}`}
+            className={`text-lg font-poppins  ${
+              activeLocation === id ? "text-cyan-500" : "text-white"
+            } hover:text-cyan-500 max-sm:text-sm cursor-pointer`}
+          >
+            Home
+          </Link>
+
           <img
             src={IconsImport.IconsOut}
             alt="out"

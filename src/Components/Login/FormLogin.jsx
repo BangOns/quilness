@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import Check_User from "../../Utils/Check_User";
 import { useNavigate } from "react-router-dom";
 import { ThisQuestions } from "../../../Quest";
+import {
+  localStorageSetUser,
+  localStorageUser,
+} from "../../Utils/LocalStorage";
 
 export default function FormLogin() {
   const navigate = useNavigate();
@@ -15,12 +19,7 @@ export default function FormLogin() {
     userDataSet({ ...userData, [name]: value });
     errorValidateSet(false);
   }
-  function HandleLocalStorage() {
-    const data = localStorage.getItem("user");
-    if (data) {
-      navigate(`/home/${data}`);
-    }
-  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     const { name } = userData;
@@ -38,13 +37,13 @@ export default function FormLogin() {
           }
         } else {
           const Level1 = {
-            level: 1,
+            tingkat: 1,
             open: true,
             success: false,
             jawabanUser: [],
           };
           validate.data.Level = [Level1];
-          localStorage.setItem("user", JSON.stringify(validate.data));
+          localStorageSetUser(validate.data);
           for (let i in ThisQuestions) {
             if (i > 0) {
               ThisQuestions[i].open = false;
@@ -65,7 +64,7 @@ export default function FormLogin() {
     }
   }
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("user"));
+    const data = localStorageUser();
     if (data) {
       navigate(`/home/${data.name}`);
     }

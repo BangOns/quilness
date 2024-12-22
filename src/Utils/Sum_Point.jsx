@@ -11,5 +11,5 @@ export default async function cekJawabanDanHitungSkor(
       jawabanBenar++;
     }
   }
-  return jawabanBenar * 50;
+  return { jawabanUser, nilai: jawabanBenar * 50 };
 }

@@ -1,9 +1,10 @@
 import { UserCandidate } from "../../User";
+import { localStorageSetUser, localStorageUser } from "./LocalStorage";
 
 export default async function Check_User({ name }) {
   return await new Promise((resolve, reject) => {
     setTimeout(() => {
-      const data = localStorage.getItem("user");
+      const data = localStorageUser();
       if (data) {
         const BeforeUserCandidate = JSON.parse(data);
         resolve({ success: true, data: BeforeUserCandidate });
@@ -11,7 +12,7 @@ export default async function Check_User({ name }) {
         UserCandidate.name = name;
         UserCandidate.points = 0;
         UserCandidate.Level = [];
-        localStorage.setItem("user", JSON.stringify(UserCandidate));
+        localStorageSetUser(UserCandidate);
         resolve({ success: true, data: UserCandidate });
       }
     }, [1000]);

@@ -30,11 +30,7 @@ export default function Ranked() {
             <header className="w-full flex flex-col items-center -mt-16">
               <div className="w-24 h-24 overflow-hidden rounded-full flex justify-center items-end bg-purple-500">
                 <img
-                  src={
-                    user.gender === "Men"
-                      ? IconsImport.IconsMen
-                      : IconsImport.IconsWomen
-                  }
+                  src={IconsImport.IconsMen}
                   alt="profile"
                   className="w-24 h-24 -mb-2"
                 />

@@ -1,11 +1,13 @@
-import { UserCandidate } from "../../User";
+import { localStorageSetUser, localStorageUser } from "./LocalStorage";
 
 export default function PostPoint_User(data) {
-  const GetIndexUserById = UserCandidate.findIndex(
-    (items) => items.code.toLowerCase() === data.id.toLowerCase()
+  const GetUserByLocalStorage = localStorageUser();
+  const getIndexLevel = GetUserByLocalStorage.Level.findIndex(
+    (item) => item.tingkat === parseInt(data.questid)
   );
-  if (GetIndexUserById !== -1) {
-    UserCandidate[GetIndexUserById].points += data.TotalSkor;
-    return UserCandidate;
-  }
+  GetUserByLocalStorage.Level[getIndexLevel].jawabanUser = [
+    ...data.TotalSkor.jawabanUser,
+  ];
+  GetUserByLocalStorage.points += data.TotalSkor.nilai;
+  return GetUserByLocalStorage;
 }

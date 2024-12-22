@@ -5,9 +5,11 @@ import Navbar from "../Components/Navbar";
 import ProfileUser from "../Components/Home/ProfileUser";
 import { ThisQuestions } from "../../Quest";
 import Bg_Circle_Profile from "../Components/Bg-Circle-Profile";
+import { localStorageUser } from "../Utils/LocalStorage";
 
 export default function Home() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = localStorageUser();
+
   const updatedQuestions = ThisQuestions.map((items, i) => {
     if (user.Level && user.Level[i]) {
       return {
