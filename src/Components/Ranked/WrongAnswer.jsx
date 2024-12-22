@@ -3,7 +3,7 @@ import { IconsImport } from "../../Utils/IconsImport";
 import TrophyCheck from "../../Utils/Check_Trophy";
 import { useParams } from "react-router-dom";
 
-export default function User_Rank({ rank, user }) {
+export default function Wrong_Answer({ rank, user }) {
   const { id } = useParams();
   const MyProfileInListUser = user.code === id ? true : false;
   const trophyRank = rank <= 3 ? TrophyCheck({ rank }) : null;
@@ -20,16 +20,10 @@ export default function User_Rank({ rank, user }) {
       </div>
       <div className="w-full basis-3/4 flex gap-4">
         <div
-          className={` w-10 h-10 overflow-hidden rounded-full flex justify-center items-end ${
-            user.gender === "Men" ? "bg-purple-500" : "bg-pink-500"
-          }`}
+          className={` w-10 h-10 overflow-hidden rounded-full flex justify-center items-end bg-purple-500`}
         >
           <img
-            src={
-              user.gender === "Men"
-                ? IconsImport.IconsMen
-                : IconsImport.IconsWomen
-            }
+            src={IconsImport.IconsMen}
             alt="men"
             className="w-10 h-10  -mb-1"
           />
