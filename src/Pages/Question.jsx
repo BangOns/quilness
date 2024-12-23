@@ -84,7 +84,7 @@ export default function Question() {
       if (GetIndexQuestion < ThisQuestions.length - 1) {
         navigate(`/home/${id}`);
       } else if (GetIndexQuestion >= ThisQuestions.length - 1) {
-        navigate(`/home/${id}/rank`);
+        navigate(`/home/${id}/results`);
       }
     }
   }
@@ -104,7 +104,7 @@ export default function Question() {
           <section className="w-full h-1/5 bg-white rounded-xl">
             <div className="w-full h-1/6 bg-purple-700 rounded-t-xl"></div>
             <header className="w-full px-4 py-3 ">
-              <h1 className="font-bold mb-2">Level {questid}</h1>
+              <h1 className="font-bold mb-2">Tema {questid}</h1>
               <p className="font-bold text-red-500">
                 * Menunjukkan Pertanyaan yang wajib di isi
               </p>

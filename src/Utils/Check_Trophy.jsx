@@ -1,11 +1,13 @@
-export default function TrophyCheck({ rank }) {
-  if (rank === 1) {
-    return "bg-yellow-300";
-  } else if (rank === 2) {
-    return "bg-slate-300";
-  } else if (rank === 3) {
-    return "bg-amber-600";
+export default function TrophyCheck(nilai) {
+  if (nilai >= 1000) {
+    return "Kamu Cocok Jadi Dosen";
+  } else if (nilai >= 750 && nilai < 1000) {
+    return "Keren kamu belajar dengan baik";
+  } else if (nilai >= 500 && nilai < 750) {
+    return "Lumayan! Tetap Semangat";
+  } else if (nilai >= 250 && nilai < 500) {
+    return "Belajar Lebih Giat Lagi";
   } else {
-    return;
+    return "Jangan Males Belajar";
   }
 }

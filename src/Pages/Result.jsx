@@ -6,6 +6,7 @@ import Bg_Circle_Profile from "../Components/Bg-Circle-Profile";
 import { localStorageUser } from "../Utils/LocalStorage";
 import { useFilterWrongAnswer } from "../hook/useFilterWrongAnswer";
 import { ThisQuestions } from "../../Quest";
+import TrophyCheck from "../Utils/Check_Trophy";
 
 export default function Results() {
   const user = localStorageUser();
@@ -44,6 +45,11 @@ export default function Results() {
           <section className="w-full h-3/4 flex flex-col  justify-start gap-6 items-center font-inter  rounded-2xl mt-2 p-4">
             <div className=" text-center h-1/2 flex flex-col justify-end">
               <img src={ImageImport.Trophy} alt="trophy" />
+            </div>
+            <div className="w-full text-center">
+              <p className="text-purple-500 font-bold tracking-wider">
+                {TrophyCheck(user.points)}
+              </p>
             </div>
             {/* {RankUser + 1 <= 3 ? (
                 <div className="w-full text-center">

@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import List_Question from "../Quest/List_Question";
 
 export default function Wrong_Answer({ wrongQuestions }) {
+  console.log(wrongQuestions);
+
   return (
     <section className="w-full sm:w-1/2 lg:w-1/3 h-full px-3 ">
       <article className="w-full flex justify-between items-center">
@@ -25,7 +27,7 @@ export default function Wrong_Answer({ wrongQuestions }) {
           <>
             {wrongQuestions.map((item, index) => (
               <section className="w-full px-5  space-y-2" key={index}>
-                <h3>Pertanyaan Tingkat SD</h3>
+                <h3>Pertanyaan Tema {item.id}</h3>
                 {item.wrongAnswer.map((data, index) => (
                   <article
                     className="bg-purple-600 shadow-lg p-3 space-y-2 text-white rounded-md"
