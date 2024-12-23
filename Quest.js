@@ -74,6 +74,7 @@ export const ThisQuestions = [
     success: false,
     dataPertanyaan: [
       {
+        id: 1,
         pertanyaan: "Siapa yang menjabat sebagai presiden ketiga Indonesia?",
         pilihan: [
           "Soeharto",
@@ -87,6 +88,7 @@ export const ThisQuestions = [
           "https://id.wikipedia.org/wiki/Proklamasi_Kemerdekaan_Indonesia",
       },
       {
+        id: 2,
         pertanyaan:
           "Dalam sejarah Indonesia, tahun berapakah Orde Baru berakhir?",
         pilihan: ["1998", "1999", "2000", "2001"],
@@ -96,6 +98,7 @@ export const ThisQuestions = [
           "https://id.wikipedia.org/wiki/Proklamasi_Kemerdekaan_Indonesia",
       },
       {
+        id: 3,
         pertanyaan: "Berapa hasil dari 15 + 25?",
         pilihan: ["35", "40", "45", "50"],
         jawaban: "40",
@@ -104,6 +107,7 @@ export const ThisQuestions = [
           "https://id.wikipedia.org/wiki/Proklamasi_Kemerdekaan_Indonesia",
       },
       {
+        id: 4,
         pertanyaan:
           "Berapa jumlah provinsi di Indonesia setelah pemekaran terakhir?",
         pilihan: ["32", "33", "34", "35"],
@@ -113,6 +117,7 @@ export const ThisQuestions = [
           "https://id.wikipedia.org/wiki/Proklamasi_Kemerdekaan_Indonesia",
       },
       {
+        id: 5,
         pertanyaan: "Berapa hasil dari 144 dibagi dengan 12?",
         pilihan: ["10", "11", "12", "13"],
         jawaban: "12",
@@ -128,6 +133,7 @@ export const ThisQuestions = [
     success: false,
     dataPertanyaan: [
       {
+        id: 1,
         pertanyaan: "Apa nama ilmiah dari pohon kelapa?",
         pilihan: [
           "Cocos nucifera",
@@ -141,6 +147,7 @@ export const ThisQuestions = [
           "https://id.wikipedia.org/wiki/Proklamasi_Kemerdekaan_Indonesia",
       },
       {
+        id: 2,
         pertanyaan:
           "Tumbuhan apa yang dikenal dengan nama 'Rafflesia arnoldii'?",
         pilihan: [
@@ -155,6 +162,7 @@ export const ThisQuestions = [
           "https://id.wikipedia.org/wiki/Proklamasi_Kemerdekaan_Indonesia",
       },
       {
+        id: 3,
         pertanyaan:
           "Bagian tumbuhan manakah yang berfungsi sebagai organ fotosintesis?",
         pilihan: ["Akar", "Batang", "Daun", "Bunga"],
@@ -164,6 +172,7 @@ export const ThisQuestions = [
           "https://id.wikipedia.org/wiki/Proklamasi_Kemerdekaan_Indonesia",
       },
       {
+        id: 4,
         pertanyaan: "Tanaman padi termasuk ke dalam jenis tanaman apa?",
         pilihan: ["Kacang-kacangan", "Sayuran", "Serealia", "Buah-buahan"],
         jawaban: "Serealia",
@@ -172,6 +181,7 @@ export const ThisQuestions = [
           "https://id.wikipedia.org/wiki/Proklamasi_Kemerdekaan_Indonesia",
       },
       {
+        id: 5,
         pertanyaan:
           "Manakah dari berikut ini yang merupakan tanaman berbiji tertutup?",
         pilihan: ["Pakis", "Pinus", "Mangga", "Lumut"],
@@ -188,6 +198,7 @@ export const ThisQuestions = [
     success: false,
     dataPertanyaan: [
       {
+        id: 1,
         pertanyaan:
           "Wayang kulit merupakan kesenian tradisional dari daerah mana?",
         pilihan: ["Jawa Barat", "Bali", "Jawa Tengah", "Sumatera Barat"],
@@ -197,6 +208,7 @@ export const ThisQuestions = [
           "https://id.wikipedia.org/wiki/Proklamasi_Kemerdekaan_Indonesia",
       },
       {
+        id: 2,
         pertanyaan: "Apa nama tarian tradisional dari Aceh yang terkenal?",
         pilihan: ["Tari Kecak", "Tari Saman", "Tari Piring", "Tari Pendet"],
         jawaban: "Tari Saman",
@@ -205,6 +217,7 @@ export const ThisQuestions = [
           "https://id.wikipedia.org/wiki/Proklamasi_Kemerdekaan_Indonesia",
       },
       {
+        id: 3,
         pertanyaan: "Apa nama pakaian adat dari daerah Sumatera Barat?",
         pilihan: ["Ulos", "Baju Bodo", "Songket", "Baju Kurung"],
         jawaban: "Baju Kurung",
@@ -213,6 +226,7 @@ export const ThisQuestions = [
           "https://id.wikipedia.org/wiki/Proklamasi_Kemerdekaan_Indonesia",
       },
       {
+        id: 4,
         pertanyaan: "Reog Ponorogo berasal dari daerah mana?",
         pilihan: ["Jawa Timur", "Jawa Barat", "Bali", "Sumatera Utara"],
         jawaban: "Jawa Timur",
@@ -221,6 +235,7 @@ export const ThisQuestions = [
           "https://id.wikipedia.org/wiki/Proklamasi_Kemerdekaan_Indonesia",
       },
       {
+        id: 5,
         pertanyaan: "Upacara Ngaben merupakan tradisi dari daerah mana?",
         pilihan: [
           "Sulawesi Utara",

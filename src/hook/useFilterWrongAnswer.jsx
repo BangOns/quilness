@@ -13,7 +13,7 @@ export function useFilterWrongAnswer({ Question, UserAnswer }) {
       // Tambahkan jawaban user ke jawaban yang salah
       const addUserAnswer = wrongAnswer.map((wrongItem) => {
         const filterAnswerUser = UserAnswer[indexLevel].jawabanUser.find(
-          (answer) => answer.id === wrongItem.id
+          (answer) => wrongItem.id === answer.id
         )?.jawaban;
         return {
           ...wrongItem,
@@ -34,5 +34,6 @@ export function useFilterWrongAnswer({ Question, UserAnswer }) {
     () => SystemFilterWrongAnswer,
     [SystemFilterWrongAnswer]
   );
+
   return FilterWrongAnswer;
 }

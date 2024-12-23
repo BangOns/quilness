@@ -131,11 +131,13 @@ export default function Question() {
                   {QuestionLevel.dataPertanyaan[step].pilihan.map(
                     (items, index) => (
                       <List_Question
+                        pages={"quest"}
                         choices={choices}
                         choicesSet={choicesSet}
                         id={questid}
                         key={index}
                         index={index}
+                        disabled={false}
                         thisQuest={items}
                       />
                     )

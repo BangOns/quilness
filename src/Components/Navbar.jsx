@@ -1,13 +1,26 @@
 import React, { useState } from "react";
 import Logo from "./Logo";
 import { IconsImport } from "../Utils/IconsImport";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import Modals_Alert from "./Modals/Modals_Alert";
-import { localStorageRemoveUser } from "../Utils/LocalStorage";
+import {
+  localStorageRemoveUser,
+  localStorageUser,
+} from "../Utils/LocalStorage";
+import { ThisQuestions } from "../../Quest";
 
 export default function Navbar() {
   const { id } = useParams();
   const [modalsSignOut, modalsSignOutSet] = useState(false);
+  const UserLevelSuccess = localStorageUser().Level.filter(
+    (items) => items.success
+  )?.length;
 
   const locationIndex = useLocation().pathname.split("/");
   const activeLocation =
@@ -34,7 +47,16 @@ export default function Navbar() {
           >
             Home
           </Link>
-
+          {UserLevelSuccess === ThisQuestions.length && (
+            <Link
+              to={`/home/${id}/results`}
+              className={`text-lg font-poppins  ${
+                activeLocation === "results" ? "text-cyan-500" : "text-white"
+              } hover:text-cyan-500 cursor-pointer  max-sm:text-sm `}
+            >
+              Result
+            </Link>
+          )}
           <img
             src={IconsImport.IconsOut}
             alt="out"
@@ -50,6 +72,7 @@ export default function Navbar() {
           handleClickDone={handleSignOutWithModals}
         />
       )}
+      <Outlet />
     </>
   );
 }

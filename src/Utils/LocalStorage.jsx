@@ -4,8 +4,6 @@ export const localStorageUser = () => {
     : null;
 };
 export const localStorageSetUser = (data) => {
-  console.log(data);
-
   localStorage.setItem("user", JSON.stringify(data));
 };
 export const localStorageRemoveUser = () => localStorage.removeItem("user");
