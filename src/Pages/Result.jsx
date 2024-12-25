@@ -10,6 +10,8 @@ import TrophyCheck from "../Utils/Check_Trophy";
 
 export default function Results() {
   const user = localStorageUser();
+
+  // Filter jawaban yang salah dan memeberikan jawaban yang benar
   const wrongQuestions = useFilterWrongAnswer({
     Question: ThisQuestions,
     UserAnswer: user.Level,

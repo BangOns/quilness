@@ -3,6 +3,7 @@ export default async function cekJawabanDanHitungSkor(
   dataPertanyaan
 ) {
   let jawabanBenar = 0;
+  const nilaiJawaban = 50;
   for (let i = 0; i < jawabanUser.length; i++) {
     let userJawaban = jawabanUser[i];
     let pertanyaan = dataPertanyaan[i];
@@ -11,5 +12,5 @@ export default async function cekJawabanDanHitungSkor(
       jawabanBenar++;
     }
   }
-  return { jawabanUser, nilai: jawabanBenar * 50 };
+  return { jawabanUser, nilai: jawabanBenar * nilaiJawaban };
 }

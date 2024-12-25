@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import List_Question from "../Quest/List_Question";
 
 export default function Wrong_Answer({ wrongQuestions }) {
-  console.log(wrongQuestions);
-
   return (
     <section className="w-full sm:w-1/2 lg:w-1/3 h-full px-3 ">
       <article className="w-full flex justify-between items-center">

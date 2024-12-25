@@ -5,6 +5,7 @@ export default function PostPoint_User(data) {
   const getIndexLevel = GetUserByLocalStorage.Level.findIndex(
     (item) => item.tingkat === parseInt(data.questid)
   );
+
   GetUserByLocalStorage.Level[getIndexLevel].jawabanUser = [
     ...data.TotalSkor.jawabanUser,
   ];

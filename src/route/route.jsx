@@ -10,7 +10,10 @@ import Question from "../Pages/Question";
 import Login from "../Pages/Login";
 import Navbar from "../Components/Navbar";
 import { ThisQuestions } from "../../Quest";
-import { localStorageUser } from "../Utils/LocalStorage";
+import {
+  localStorageRemoveUser,
+  localStorageUser,
+} from "../Utils/LocalStorage";
 
 const route = createBrowserRouter([
   {
@@ -46,7 +49,7 @@ const route = createBrowserRouter([
   },
   {
     path: "*",
-    element: <Navigate to="/" />,
+    element: <ErrorPage />,
   },
 ]);
 
@@ -72,4 +75,9 @@ function PrivateRouteResult() {
   ) : (
     <Navigate to={`/home/${UserLevelSuccess.name}`} />
   );
+}
+
+function ErrorPage() {
+  localStorageRemoveUser();
+  return <Navigate to="/" />;
 }

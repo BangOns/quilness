@@ -30,6 +30,7 @@ export function useFilterWrongAnswer({ Question, UserAnswer }) {
     // Kembalikan null jika level tidak cocok
     return null;
   }).filter(Boolean); // Hapus nilai null dari hasil pemetaan
+  // Kembalikan hasil filter
   const FilterWrongAnswer = useMemo(
     () => SystemFilterWrongAnswer,
     [SystemFilterWrongAnswer]

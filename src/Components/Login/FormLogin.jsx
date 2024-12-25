@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Check_User from "../../Utils/Check_User";
+import { Check_User, CreateInitialLevel } from "../../Utils/Login_Utils";
 import { useNavigate } from "react-router-dom";
 import { ThisQuestions } from "../../../Quest";
 import {
@@ -27,35 +27,11 @@ export default function FormLogin() {
     const validate = await Check_User({ name });
     try {
       if (validate.success) {
-        if (validate.data.Level.length !== 0) {
-          const Level = validate.data.Level.filter(
-            (item) => item.success === true
-          );
-          for (let i in Level) {
-            ThisQuestions[i].open = true;
-            ThisQuestions[i].success = true;
-          }
-        } else {
-          const Level1 = {
-            tingkat: 1,
-            open: true,
-            success: false,
-            jawabanUser: [],
-          };
-          validate.data.Level = [Level1];
-          localStorageSetUser(validate.data);
-          for (let i in ThisQuestions) {
-            if (i > 0) {
-              ThisQuestions[i].open = false;
-              ThisQuestions[i].success = false;
-            } else {
-              ThisQuestions[i].open = true;
-              ThisQuestions[i].success = false;
-            }
-          }
-        }
+        CreateInitialLevel(validate);
         navigate(`/home/${validate.data.name}`);
         errorValidateSet(false);
+      } else {
+        errorValidateSet(true);
       }
     } catch (error) {
       errorValidateSet(true);
@@ -73,7 +49,7 @@ export default function FormLogin() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full h-3/5 flex flex-col justify-evenly font-poppins font-medium sm:justify-between sm:h-1/2 bg-white rounded-t-2xl sm:rounded-2xl py-5 px-4 z-10"
+      className="w-full h-1/2 flex flex-col justify-evenly font-poppins font-medium sm:justify-between sm:h-1/2 bg-white rounded-t-2xl sm:rounded-2xl py-5 px-4 z-10"
     >
       <div className="w-full ">
         <label htmlFor="nama" className="block font-light pb-2">
@@ -90,9 +66,7 @@ export default function FormLogin() {
           onChange={handelChange}
         />
       </div>
-      {errorValidate && (
-        <p className="text-red-500 text-sm py-1">Kode atau Nama Salah</p>
-      )}
+      {errorValidate && <p className="text-red-500 text-sm py-1">Nama Salah</p>}
       <div className="w-full mt-3">
         <button
           type="submit"

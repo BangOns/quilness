@@ -6,10 +6,9 @@ import { ThisQuestions } from "../../Quest";
 import Bg_Circle_Profile from "../Components/Bg-Circle-Profile";
 import { localStorageUser } from "../Utils/LocalStorage";
 
-export default function Home() {
-  const user = localStorageUser();
-
-  const updatedQuestions = ThisQuestions.map((items, i) => {
+// Fungsi didefinisikan untuk mengambil data question yang telah diselesaikan / update
+function getUpdateQuestion(user) {
+  return ThisQuestions.map((items, i) => {
     if (user.Level && user.Level[i]) {
       return {
         ...items,
@@ -19,6 +18,11 @@ export default function Home() {
     }
     return items;
   });
+}
+export default function Home() {
+  const user = localStorageUser();
+
+  const updatedQuestions = getUpdateQuestion(user);
 
   return (
     <article className="w-full h-[calc(100vh-5rem)] flex justify-center items-center max-sm:px-4 font-alametric">

@@ -1,102 +1,89 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import List_Question from "../Components/Quest/List_Question";
 import { useNavigate, useParams } from "react-router-dom";
 import { ThisQuestions } from "../../Quest";
 import cekJawabanDanHitungSkor from "../Utils/Sum_Point";
 import PostPoint_User from "../Utils/PostPoint_User";
 import Modals_Alert from "../Components/Modals/Modals_Alert";
-import { localStorageSetUser } from "../Utils/LocalStorage";
+
+import {
+  initialState,
+  NextLevelAndAddAnswerUser,
+  PrivateQuestions,
+  PushAnswer,
+  reducerQuestion,
+} from "../Utils/Question_Utils";
 
 export default function Question() {
-  const [step, stepSet] = useState(0);
-  const [choices, choicesSet] = useState("");
-  const [submitmodals, submitmodalsSet] = useState(false);
-  const [errorStep, errorStepSet] = useState(false);
-  const [allAnswer, allAnswerSet] = useState([]);
+  const [state, dispatch] = useReducer(reducerQuestion, initialState); // method untuk menampung jawaban user
   const { id, questid } = useParams();
   const navigate = useNavigate();
+
   const QuestionLevel = ThisQuestions.find(
     (items) => items.level === parseInt(questid)
   );
+
   function handleNextStep(e) {
     e.preventDefault();
-    if (step < QuestionLevel.dataPertanyaan.length - 1) {
-      if (choices !== "") {
-        stepSet((prev) => prev + 1);
-        PushDataJawaban();
-        errorStepSet(false);
-        choicesSet("");
-      } else {
-        errorStepSet(true);
-      }
-    } else {
-      if (choices !== "") {
-        PushDataJawaban();
-        submitmodalsSet(true);
-        errorStepSet(true);
-      } else {
-        errorStepSet(true);
-      }
+    // Jika Jawaban Kosong
+    if (state.choices === "") {
+      dispatch({ type: "errorStep", payload: true });
+      return;
     }
-  }
-  function handlePrevStep() {
-    if (step >= 1) {
-      stepSet(step - 1);
-      errorStepSet(false);
+    // Menambahkan Jawaban ke dalam state allAnswer
+    const UpdateDataJawaban = PushAnswer({
+      allAnswer: state.allAnswer,
+      step: state.step,
+      choices: state.choices,
+    });
+
+    dispatch({ type: "allAnswer", payload: UpdateDataJawaban });
+
+    //  validasi jika step sudah selesai dikerjakan
+    if (state.step < QuestionLevel.dataPertanyaan.length - 1) {
+      dispatch({ type: "NextStep" });
     } else {
-      navigate(`/home/${id}`);
-      errorStepSet(false);
-    }
-  }
-  function PushDataJawaban() {
-    const checkAnswerByIndex = allAnswer.findIndex(
-      (answer) => answer.id === step + 1
-    );
-    if (checkAnswerByIndex !== -1) {
-      const updatedAnswers = [...allAnswer];
-      updatedAnswers[checkAnswerByIndex].jawaban = choices;
-      allAnswerSet(updatedAnswers);
-    } else {
-      allAnswerSet([...allAnswer, { id: step + 1, jawaban: choices }]);
-    }
-  }
-  async function handleSubmitWithModals() {
-    const GetIndexQuestion = ThisQuestions.findIndex(
-      (items) => items.level === parseInt(questid)
-    );
-    let TotalSkor = await cekJawabanDanHitungSkor(
-      allAnswer,
-      QuestionLevel.dataPertanyaan
-    );
-    const UserData = PostPoint_User({ TotalSkor, questid });
-    if (GetIndexQuestion !== -1) {
-      UserData.Level[GetIndexQuestion].success = true;
-      if (GetIndexQuestion < ThisQuestions.length - 1) {
-        const nextLevel = {
-          tingkat: ThisQuestions[GetIndexQuestion + 1].level,
-          open: true,
-          success: false,
-          jawabanUser: [],
-        };
-        UserData.Level = [...UserData.Level, nextLevel];
-      }
-      localStorageSetUser(UserData);
-      if (GetIndexQuestion < ThisQuestions.length - 1) {
-        navigate(`/home/${id}`);
-      } else if (GetIndexQuestion >= ThisQuestions.length - 1) {
-        navigate(`/home/${id}/results`);
-      }
+      dispatch({ type: "ShowSubmitmodals", payload: true });
     }
   }
 
-  useEffect(() => {
-    const getAnswerPrev = allAnswer.find((items) => items.id === step + 1);
-    if (getAnswerPrev) {
-      choicesSet(getAnswerPrev.jawaban);
+  // Kembali ke step sebelumnya
+  function handlePrevStep() {
+    dispatch({ type: "errorStep", payload: false });
+    if (state.step >= 1) {
+      dispatch({ type: "PrevStep" });
     } else {
-      choicesSet("");
+      navigate(`/home/${id}`);
     }
-  }, [step]);
+  }
+
+  async function handleSubmitWithModals() {
+    // CeK Jawaban dan Hitung Skor User
+    let TotalSkor = await cekJawabanDanHitungSkor(
+      state.allAnswer,
+      QuestionLevel.dataPertanyaan
+    );
+    // Menambahkan Skor User ke dalam data user
+    const UserData = PostPoint_User({ TotalSkor, questid });
+    // Pindah ke level selanjutnya
+    NextLevelAndAddAnswerUser({ questId: questid, UserData, navigate, id });
+  }
+
+  // Mengambil jawaban sebelumnya jika ada
+  useEffect(() => {
+    const getAnswerPrev = state.allAnswer.find(
+      (items) => items.id === state.step + 1
+    );
+    dispatch({
+      type: "Setchoices",
+      payload: getAnswerPrev ? getAnswerPrev.jawaban : "",
+    });
+  }, [state.step]);
+
+  // Privacy untuk Question setiap step nya
+  useEffect(() => {
+    PrivateQuestions({ questid, id, navigate });
+  }, [id, questid, navigate]);
   return (
     <>
       <main className="w-full h-screen bg-[#EFEBF9] max-sm:text-sm flex items-center font-poppins justify-center px-4">
@@ -105,7 +92,7 @@ export default function Question() {
             <div className="w-full h-1/6 bg-purple-700 rounded-t-xl"></div>
             <header className="w-full px-4 py-3 ">
               <h1 className="font-bold mb-2">Tema {questid}</h1>
-              <p className="font-bold text-red-500">
+              <p className=" text-red-500 text-xs">
                 * Menunjukkan Pertanyaan yang wajib di isi
               </p>
             </header>
@@ -114,13 +101,13 @@ export default function Question() {
             <div className="w-full h-auto pb-4  bg-white rounded-xl">
               <header className="w-full h-10 bg-purple-700 rounded-t-xl px-4 text-white flex items-center  ">
                 <h2>
-                  {step + 1}/{QuestionLevel.dataPertanyaan.length}
+                  {state.step + 1}/{QuestionLevel?.dataPertanyaan.length}
                 </h2>
               </header>
               <section className="px-4 py-3 w-full ">
                 <header className="w-full flex justify-between">
                   <p className="text-sm w-4/5">
-                    {QuestionLevel.dataPertanyaan[step].pertanyaan}{" "}
+                    {QuestionLevel?.dataPertanyaan[state.step].pertanyaan}{" "}
                     <span className="text-red-500">*</span>
                   </p>
                   <p className="text-slate-400 text-xs w-auto   flex items-center">
@@ -128,12 +115,14 @@ export default function Question() {
                   </p>
                 </header>
                 <article className="w-full flex flex-col mt-3 gap-5">
-                  {QuestionLevel.dataPertanyaan[step].pilihan.map(
+                  {QuestionLevel?.dataPertanyaan[state.step].pilihan.map(
                     (items, index) => (
                       <List_Question
                         pages={"quest"}
-                        choices={choices}
-                        choicesSet={choicesSet}
+                        choices={state.choices}
+                        choicesSet={(value) =>
+                          dispatch({ type: "Setchoices", payload: value })
+                        }
                         id={questid}
                         key={index}
                         index={index}
@@ -144,7 +133,7 @@ export default function Question() {
                   )}
                 </article>
               </section>
-              {errorStep && (
+              {state.errorStep && (
                 <p className="px-4 text-red-500 text-sm">
                   Mohon Di isi terlebih dahulu
                 </p>
@@ -168,10 +157,12 @@ export default function Question() {
           </section>
         </article>
       </main>
-      {submitmodals && (
+      {state.ShowSubmitmodals && (
         <Modals_Alert
           pages={"question"}
-          handleCloseModals={submitmodalsSet}
+          handleCloseModals={() =>
+            dispatch({ type: "ShowSubmitmodals", payload: false })
+          }
           handleClickDone={handleSubmitWithModals}
         />
       )}

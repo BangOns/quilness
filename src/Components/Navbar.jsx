@@ -22,13 +22,15 @@ export default function Navbar() {
     (items) => items.success
   )?.length;
 
-  const locationIndex = useLocation().pathname.split("/");
+  const locationIndex = useLocation().pathname.split("/"); // ["", "home", "id"]
   const activeLocation =
-    useLocation().pathname.split("/")[locationIndex.length - 1];
+    useLocation().pathname.split("/")[locationIndex.length - 1]; // id
   const navigate = useNavigate();
+  // Memunculkan Modals Sign Out
   function handleModals() {
     modalsSignOutSet(true);
   }
+  // Sign Out
   function handleSignOutWithModals() {
     modalsSignOutSet(false);
     localStorageRemoveUser();
