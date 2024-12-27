@@ -4,17 +4,19 @@
 
 - Login User
 
-- Profile User dengan beberapa level
+- Ada 4 pilihan tema pertanyaan
 
-- Soal ujian yang harus dikerjakan
+- ada 5 pertanyaan setiap tema
 
-- Hasil ujian (Nilai) dari ujian
+- Menampilkan hasil nilai
 
-- Menampilkan Hasil Jawaban yang Salah dan Memberikan Jawaban yang Benar
+- Menampilkan Jawaban Salah dan Jawaban Benar
 
 ## Tech Stack
 
 **Library and Framework** : React Js, react-router-dom, Tailwind CSS
+
+**Database** : Local Storage
 
 ## Demo
 

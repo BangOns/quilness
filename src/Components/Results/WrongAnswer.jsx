@@ -53,7 +53,10 @@ export default function Wrong_Answer({ wrongQuestions }) {
                       </p>
                       <p>
                         Link :{" "}
-                        <Link to={"/"} className="text-sky-300 underline">
+                        <Link
+                          to={`${data.linkPenjelasan}`}
+                          className="text-sky-300 underline"
+                        >
                           Link terkait
                         </Link>
                       </p>

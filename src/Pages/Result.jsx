@@ -53,21 +53,6 @@ export default function Results() {
                 {TrophyCheck(user.points)}
               </p>
             </div>
-            {/* {RankUser + 1 <= 3 ? (
-                <div className="w-full text-center">
-                  <h3 className="font-bold ">Selamat Anda</h3>
-                  <p className="text-purple-500 font-bold tracking-wider">
-                    Diterima Kerja
-                  </p>
-                </div>
-              ) : (
-                <div className="w-full text-center">
-                  <h3 className="font-bold ">Mohon Maaf</h3>
-                  <p className="text-red-500 font-bold tracking-wider">
-                    Anda Gagal Diterima
-                  </p>
-                </div>
-              )} */}
           </section>
         </div>
       </section>
